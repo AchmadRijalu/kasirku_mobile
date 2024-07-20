@@ -25,7 +25,7 @@ to gets all the dependencies listed in the pubspec.yaml file
 
 After running all the command above, the Flutter Application is ready to use.
 
-2 Roles Available: Admin, Cashier
+Roles Available from Laravel Seeder: Admin, and Cashier
 - Admin: 
 email: admin@gmail.com
 password: password
