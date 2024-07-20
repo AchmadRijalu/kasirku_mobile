@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kasirku_mobile/UI/views/edit_item_view.dart';
+import 'package:kasirku_mobile/bloc/auth/auth_bloc.dart';
 import 'package:kasirku_mobile/bloc/item/item_bloc.dart';
 import 'package:kasirku_mobile/models/item_model.dart';
 import 'package:kasirku_mobile/theme/theme.dart';
@@ -16,18 +17,23 @@ class DetailItemView extends StatefulWidget {
 
 class _DetailItemViewState extends State<DetailItemView> {
   final ItemBloc itemBloc = ItemBloc();
-
+  String role = "";
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    print("ID ITEM : ${widget.id}");
+    final authState = context.read<AuthBloc>().state;
+
+    if (authState is AuthSuccess) {
+      role = authState.userDataModel.user.role;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: secondaryColor,
         title: Text("Detail Item"),
       ),
       body: BlocProvider(
@@ -82,53 +88,55 @@ class _DetailItemViewState extends State<DetailItemView> {
                     const SizedBox(
                       height: 24,
                     ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10)),
-                              backgroundColor: Color(0XFF2D31FA)),
-                          onPressed: (() async {
-                            await Navigator.push(context, MaterialPageRoute(
-                              builder: (context) {
-                                return EditItemView(
-                                  id: widget.id,
-                                  name: state.item.data!.name,
-                                  price: state.item.data!.price,
-                                  description: state.item.data!.description,
-                                );
-                              },
-                            ));
-                            itemBloc.add(ItemGetItemDetail(widget.id!));
-                          }),
-                          child: Text("Edit",
-                              style: primaryTextStyle.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                  color: whiteColor,
-                                  fontSize: 16))),
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10)),
-                              backgroundColor: Colors.red),
-                          onPressed: (() async {
-                            context
-                                .read<ItemBloc>()
-                                .add(ItemDeleteItem(widget.id!));
-                          }),
-                          child: Text("Delete",
-                              style: primaryTextStyle.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                  color: whiteColor,
-                                  fontSize: 16))),
-                    )
+                    if (role == "admin") ...[
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                backgroundColor: Color(0XFF2D31FA)),
+                            onPressed: (() async {
+                              await Navigator.push(context, MaterialPageRoute(
+                                builder: (context) {
+                                  return EditItemView(
+                                    id: widget.id,
+                                    name: state.item.data!.name,
+                                    price: state.item.data!.price,
+                                    description: state.item.data!.description,
+                                  );
+                                },
+                              ));
+                              itemBloc.add(ItemGetItemDetail(widget.id!));
+                            }),
+                            child: Text("Edit",
+                                style: primaryTextStyle.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                    color: whiteColor,
+                                    fontSize: 16))),
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                backgroundColor: Colors.red),
+                            onPressed: (() async {
+                              context
+                                  .read<ItemBloc>()
+                                  .add(ItemDeleteItem(widget.id!));
+                            }),
+                            child: Text("Delete",
+                                style: primaryTextStyle.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                    color: whiteColor,
+                                    fontSize: 16))),
+                      )
+                    ]
                   ],
                 ),
               );

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kasirku_mobile/UI/views/create_item_view.dart';
 import 'package:kasirku_mobile/UI/views/create_transaction_view.dart';
 import 'package:kasirku_mobile/UI/views/detail_item_view.dart';
+import 'package:kasirku_mobile/UI/views/list_transaction_view.dart';
 import 'package:kasirku_mobile/UI/views/login_view.dart';
 import 'package:kasirku_mobile/UI/widgets/list_item_widget.dart';
 import 'package:kasirku_mobile/bloc/auth/auth_bloc.dart';
@@ -28,7 +29,6 @@ class _ListItemViewState extends State<ListItemView> {
 
     if (authState is AuthSuccess) {
       role = authState.userDataModel.user.role;
-      print("User ID AKUN : $role");
     }
   }
 
@@ -38,6 +38,18 @@ class _ListItemViewState extends State<ListItemView> {
       appBar: AppBar(
         backgroundColor: secondaryColor,
         actions: <Widget>[
+          role == "cashier"
+              ? IconButton(
+                  icon: Icon(
+                    Icons.dock_rounded,
+                    color: Colors.white,
+                  ),
+                  onPressed: () async {
+                    // do something
+                    Navigator.pushNamed(context, ListTransactionView.routeName);
+                  },
+                )
+              : SizedBox(),
           BlocListener<AuthBloc, AuthState>(
               listener: (context, state) {
                 Navigator.pushNamedAndRemoveUntil(
@@ -79,11 +91,10 @@ class _ListItemViewState extends State<ListItemView> {
               children: [
                 const SizedBox(height: 14),
                 Text(
-                  "List Item",
+                  "Items",
                   style:
                       blackTextStyle.copyWith(fontSize: 40, fontWeight: bold),
                 ),
-                const SizedBox(height: 24),
               ],
             ),
           ),
@@ -103,12 +114,13 @@ class _ListItemViewState extends State<ListItemView> {
                 } else if (state is ItemSuccess) {
                   return Expanded(
                       child: ListView.builder(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     itemCount: state.items.data!.length,
                     itemBuilder: (context, index) {
                       return ListItemWidget(
                         item: state.items.data?[index],
-                        onTap: () async{
-                         await Navigator.pushNamed(
+                        onTap: () async {
+                          await Navigator.pushNamed(
                             context,
                             DetailItemView.routeName,
                             arguments: state.items.data?[index].id,
@@ -119,9 +131,7 @@ class _ListItemViewState extends State<ListItemView> {
                     },
                   ));
                 }
-                return Container(
-                  child: Text(""),
-                );
+                return Container();
               },
             ),
           ),
