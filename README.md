@@ -1,16 +1,35 @@
-# kasirku_mobile
 
-A new Flutter project.
+Before the installation part, clone the repository first by running this command :
+```sh
+git clone https://github.com/AchmadRijalu/kasirku_mobile
+```
 
-## Getting Started
+## Make sure already installed :
+Dart Version : 3.4.3 
+Flutter : 3.22.2 
+Xcode: minimum 15.2 (for iOS Version)
 
-This project is a starting point for a Flutter application.
+## Installation
+Check _Flutter Doctor_ Command on terminal first.
 
-A few resources to get you started if this is your first Flutter project:
+```sh
+flutter doctor
+```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Then inside of the project that already cloned
+```sh
+Flutter pub get
+```
+to gets all the dependencies listed in the pubspec.yaml file
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+After running all the command above, the Flutter Application is ready to use.
+
+2 Roles Available: Admin, Cashier
+- Admin: 
+email: admin@gmail.com
+password: password
+- Cashier:
+email: cashier@gmail.com
+password: password
+
