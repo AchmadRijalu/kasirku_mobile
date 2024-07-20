@@ -60,31 +60,29 @@ class _DetailItemViewState extends State<DetailItemView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Name : ${state.item.data!.name}",
-                      style: TextStyle(
-                          fontFamily: "Quicksand",
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16),
+                      "Name: ${state.item.data!.name}",
+                      style: blackTextStyle.copyWith(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                      ),
                     ),
-                    SizedBox(
-                      height: 8,
-                    ),
+                    const SizedBox(height: 8),
                     Text(
-                      "Price: ${state.item.data!.price.toString()}",
-                      style: TextStyle(
-                          fontFamily: "Quicksand",
-                          color: Colors.grey.shade700,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 13),
+                      "Price: ${state.item.data!.price}",
+                      style: blackTextStyle.copyWith(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                      ),
                     ),
+                    const SizedBox(height: 8),
                     Text(
-                      "Description : ${state.item.data!.description}",
-                      style: TextStyle(
-                          fontFamily: "Quicksand",
-                          color: Colors.grey.shade700,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 13),
+                      "Description: ${state.item.data!.description}",
+                      style: blackTextStyle.copyWith(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                      ),
                     ),
+                    const SizedBox(height: 24),
                     const SizedBox(
                       height: 24,
                     ),
